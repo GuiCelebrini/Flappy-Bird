@@ -40,7 +40,7 @@ public class FlappyBird extends ApplicationAdapter {
 	@Override
 	public void render () {
 
-		contadorMovimento++;
+		//contadorMovimento += 5;
 
 		if (posicaoInicial > 0) {
 			velocidadeQueda += 0.5;
@@ -53,7 +53,7 @@ public class FlappyBird extends ApplicationAdapter {
 		batch.begin();
 
 		batch.draw(fundo, 0,0, larguraTela, alturaTela);
-		batch.draw(passaro[(int) variacao], contadorMovimento, posicaoInicial);
+		batch.draw(passaro[(int) variacao], 200, posicaoInicial);
 
 		batch.end();
 

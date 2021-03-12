@@ -14,8 +14,12 @@ public class FlappyBird extends ApplicationAdapter {
 	//variáveis de configuração
 	private int contadorMovimento = 0;
 	private float variacao = 0;
+	private float velocidadeQueda = 0;
+
 	private int larguraTela;
 	private int alturaTela;
+	private float posicaoInicial;
+
 
 
 	@Override
@@ -30,19 +34,26 @@ public class FlappyBird extends ApplicationAdapter {
 
 		larguraTela = Gdx.graphics.getWidth();
 		alturaTela = Gdx.graphics.getHeight();
+		posicaoInicial = alturaTela/2;
 	}
 
 	@Override
 	public void render () {
 
-		//contadorMovimento++;
-		variacao += 0.1;
+		contadorMovimento++;
+
+		if (posicaoInicial > 0) {
+			velocidadeQueda += 0.5;
+			posicaoInicial = posicaoInicial - velocidadeQueda;
+		}
+
+		variacao += Gdx.graphics.getDeltaTime() * 7; //getDeltaTime() pega o intervalo de tempo entre os render
 		if (variacao > 2) variacao = 0;
 
 		batch.begin();
 
 		batch.draw(fundo, 0,0, larguraTela, alturaTela);
-		batch.draw(passaro[(int) variacao], 50, alturaTela/2);
+		batch.draw(passaro[(int) variacao], contadorMovimento, posicaoInicial);
 
 		batch.end();
 

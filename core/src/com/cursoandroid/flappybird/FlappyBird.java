@@ -18,7 +18,7 @@ public class FlappyBird extends ApplicationAdapter {
 
 	private int larguraTela;
 	private int alturaTela;
-	private float posicaoInicial;
+	private float posicaoInicialVertical;
 
 
 
@@ -34,7 +34,7 @@ public class FlappyBird extends ApplicationAdapter {
 
 		larguraTela = Gdx.graphics.getWidth();
 		alturaTela = Gdx.graphics.getHeight();
-		posicaoInicial = alturaTela/2;
+		posicaoInicialVertical = alturaTela/2;
 	}
 
 	@Override
@@ -42,18 +42,30 @@ public class FlappyBird extends ApplicationAdapter {
 
 		//contadorMovimento += 5;
 
-		if (posicaoInicial > 0) {
+        //adicionando "gravidade" e queda ao pássaro
+		if (posicaoInicialVertical > 0 || velocidadeQueda < 0) {
 			velocidadeQueda += 0.5;
-			posicaoInicial = posicaoInicial - velocidadeQueda;
+			posicaoInicialVertical = posicaoInicialVertical - velocidadeQueda;
 		}
 
+		//adicionando evento de clique e evitando que o pássaro suba mais que o limite da tela
+		if (posicaoInicialVertical < alturaTela) {
+			if (Gdx.input.justTouched()) {
+				velocidadeQueda -= 12;
+			}
+		} else {
+			posicaoInicialVertical = alturaTela - 50;
+		}
+
+		//ajeitando a variação de imagens, fazendo o pássaro bater as asas
 		variacao += Gdx.graphics.getDeltaTime() * 7; //getDeltaTime() pega o intervalo de tempo entre os render
 		if (variacao > 2) variacao = 0;
 
+		//gerando as imagens e sprites do jogo
 		batch.begin();
 
 		batch.draw(fundo, 0,0, larguraTela, alturaTela);
-		batch.draw(passaro[(int) variacao], 200, posicaoInicial);
+		batch.draw(passaro[(int) variacao], 200, posicaoInicialVertical);
 
 		batch.end();
 

@@ -25,14 +25,13 @@ public class FlappyBird extends ApplicationAdapter {
 	private Rectangle retanguloCanoTopo, retanguloCanoBaixo;
 	//private ShapeRenderer shape;
 
-	//variáveis de configuração
-	private boolean jogoComecou = false; //caso tenha começado vai passar para true
+	//variáveis de configuração, separadas pelo tipo
 	private boolean marcouPonto = false; //caso o cano passe do pássaro se tornará true
 
+	private int estadoJogo = 0; //0 -> jogo prestes a iniciar, 1 -> jogo rodando, 2 -> game over
 	private int pontuacao = 0;
 	private int larguraTela;
 	private int alturaTela;
-	private int estadoJogo = 0; //0 -> jogo prestes a iniciar, 1 -> jogo rodando, 2 -> game over
 
 	private float variacao = 0;
 	private float velocidadeQueda = 0;
@@ -44,10 +43,11 @@ public class FlappyBird extends ApplicationAdapter {
 
 
 	@Override
-	public void create () {
+	public void create () { //variáveis separadas pelos tipos
 
 		batch = new SpriteBatch();
 		numAleatorio = new Random();
+		//shape = new ShapeRenderer();
 
 		fonte = new BitmapFont();
 		fonte.setColor(Color.WHITE);
@@ -59,7 +59,6 @@ public class FlappyBird extends ApplicationAdapter {
 		passaroCirculo = new Circle();
 		retanguloCanoTopo = new Rectangle();
 		retanguloCanoBaixo = new Rectangle();
-		//shape = new ShapeRenderer();
 
 		passaro = new Texture[3];
 		passaro[0] = new Texture("passaro1.png");
